@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ミサイル施設 立体マップ｜バイオハザード5 マーセナリーズ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF0EC;--panel:#FFFFFF;--ink:#1F2421;--sub:#5B635D;--line:#C9CEC8;--line-strong:#8A928B;--on:#DDE6DA;--accent:#2F6B3A;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171A18;--panel:#222622;--ink:#E7EBE6;--sub:#A3ABA4;--line:#3A403B;--line-strong:#6C756D;--on:#34402F;--accent:#9FD18F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171A18;--panel:#222622;--ink:#E7EBE6;--sub:#A3ABA4;--line:#3A403B;--line-strong:#6C756D;--on:#34402F;--accent:#9FD18F;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.6}
+main{max-width:980px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:clamp(20px,4.5vw,28px);font-weight:700;margin:0 0 2px;letter-spacing:.02em}
+.lead{color:var(--sub);font-size:14px;margin:0 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.lv{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+button{font:inherit;font-size:13px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+button:hover{border-color:var(--line-strong)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.on{background:var(--on);border-color:var(--line-strong)}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.row{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px;color:var(--sub)}
+.row input[type=range]{flex:1;accent-color:var(--accent)}
+.lg{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--sub);margin-top:10px}
+.lg span{display:flex;align-items:center;gap:5px}
+.ic{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+.hint{font-size:12px;color:var(--sub);margin:-4px 0 8px}
+#wrap{touch-action:pan-y;cursor:grab;user-select:none;overflow:hidden;border-radius:8px;background:var(--panel)}
+.zb{min-width:40px;font-size:15px;justify-content:center}
+.howto{font-size:13px;color:var(--sub);margin:14px 2px 0}
+.howto p{margin:4px 0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<main>
+<h1>ミサイル施設 立体マップ</h1>
+<p class="lead">バイオハザード5 マーセナリーズ「ミサイル施設」の階層を重ねて表示します。ハシゴ・階段・飛び降り・段差のつながりと、アイテムの位置を確認できます。</p>
+<div class="card">
+<div class="lv" id="md"></div>
+<div class="lv" id="lv"></div>
+<div class="hint" id="hint">エリアをタップすると、選んだものだけを表示します（複数選択できます）</div>
+<div class="lv" style="align-items:center">
+<button class="zb" id="zo" aria-label="縮小">−</button><button class="zb" id="zi" aria-label="拡大">＋</button><button id="zr">リセット</button>
+<span id="zv" style="font-size:13px;color:var(--sub);min-width:40px">100%</span>
+<button id="dm">ドラッグ：回転</button>
+</div>
+<div id="wrap"></div>
+<div class="row"><span>回転</span><input type="range" id="rot" min="-180" max="180" step="1" value="-10" aria-label="回転"><span id="rotv" style="min-width:40px">-10°</span></div>
+<div class="row"><span>床の透け具合</span><input type="range" id="alp" min="30" max="100" step="1" value="65" aria-label="床の透け具合"></div>
+<div class="lg">
+<span><svg width="22" height="26"><g stroke="#D4537E" stroke-width="2"><line x1="6" y1="2" x2="6" y2="24"/><line x1="16" y1="2" x2="16" y2="24"/><line x1="6" y1="7" x2="16" y2="7"/><line x1="6" y1="13" x2="16" y2="13"/><line x1="6" y1="19" x2="16" y2="19"/></g></svg>ハシゴ</span>
+<span><svg width="28" height="26"><path d="M8 24L8 18L13 18L13 12L18 12L18 6L23 6L23 2L27 2L27 24Z" fill="#888780"/><path d="M2 24L2 20L7 20L7 14L12 14L12 8L17 8L17 4L22 4L22 24Z" fill="#D3D1C7" stroke="#5F5E5A" stroke-width="1"/></svg>階段</span>
+<span><svg width="22" height="26"><circle cx="11" cy="4" r="3" fill="none" stroke="#D85A30" stroke-width="2"/><line x1="11" y1="7" x2="11" y2="18" stroke="#D85A30" stroke-width="2" stroke-dasharray="3 2"/><path d="M5 17L11 25L17 17Z" fill="#D85A30"/></svg>飛び降り</span>
+<span><svg width="34" height="20"><path d="M4 17Q17 -3 30 17" fill="none" stroke="#1D9E75" stroke-width="2" stroke-dasharray="4 2"/><path d="M0 13L4 19L8 14Z" fill="#1D9E75"/><path d="M34 13L30 19L26 14Z" fill="#1D9E75"/></svg>段差・隙間</span>
+<span><svg width="30" height="12"><line x1="2" y1="6" x2="28" y2="6" stroke="#444441" stroke-width="2"/><circle cx="6" cy="6" r="2" fill="#444441"/><circle cx="15" cy="6" r="2" fill="#444441"/><circle cx="24" cy="6" r="2" fill="#444441"/></svg>柵・壁</span>
+<span><svg width="30" height="12"><line x1="2" y1="6" x2="28" y2="6" stroke="#0F6E56" stroke-width="6"/><line x1="2" y1="6" x2="28" y2="6" stroke="#5DCAA5" stroke-width="3.5"/></svg>扉</span>
+</div>
+<div class="lg">
+<span><i class="ic" style="background:#EF9F27;color:#412402">30</i>タイムボーナス</span>
+<span><i class="ic" style="background:#FAC775;color:#412402;border:1px solid #854F0B">C</i>コンボボーナス（金庫）</span>
+<span><i class="ic" style="background:#D4537E;color:#fff;border-radius:2px">爆</i>爆発物（ボンベ等）</span>
+<span><i class="ic" style="background:#B4B2A9;color:#2C2C2A">感</i>感知型爆弾</span>
+<span><i class="ic" style="background:#97C459;color:#173404">手</i>手榴弾</span>
+<span><i class="ic" style="background:#85B7EB;color:#042C53">閃</i>閃光手榴弾</span>
+<span><i class="ic" style="background:#F09595;color:#501313">焼</i>焼夷手榴弾</span>
+<span><i class="ic" style="background:#888780"></i>救急スプレー</span>
+<span><i class="ic" style="background:#639922"></i>ハーブ</span>
+<span><i class="ic" style="background:#fff;color:#3B6D11;border:1px solid #3B6D11">鶏</i>鶏</span>
+</div>
+</div>
+<div class="howto">
+<p>「上下接続」は、ハシゴや飛び降りの上下がそろうように各エリアを重ねた表示です。「マップ通り」は元の攻略マップと同じ配置です。</p>
+<p>図を左右にドラッグすると回転します。拡大したあとに位置を動かすときは「ドラッグ：移動」に切り替えてください。</p>
+</div>
+</main>
+<script>
+const L=[
+{n:'メイン：ロの字・南東の部屋',z:0,f:'#B5D4F4',s:'#185FA5',sh:[{o:[[470,352],[665,352],[665,480],[470,480]],h:[[[505,385],[600,385],[600,450],[505,450]]]},{o:[[590,555],[670,555],[670,690],[510,690],[510,615],[590,615]]}],
+ ic:[['k',622,385],['t',625,428,30],['b',652,428],['g',640,570],['s',553,682],['k',574,682],['b',620,682],['c',585,646]]},
+{n:'メイン：中央通路',z:0.3,f:'#9FE1CB',s:'#0F6E56',sh:[{o:[[440,160],[530,160],[530,350],[470,350],[470,480],[530,480],[530,566],[440,566],[440,455],[400,455],[400,350],[440,350]]}],
+ fence:[[[459,279],[494,279]],[[459,279],[459,323]],[[459,323],[494,323]]],
+ ic:[['s',488,190],['b',490,215],['w',490,242],['t',422,400,30],['b',418,437],['b',515,500]]},
+{n:'北端：手榴弾・爆発物の通路',z:0.7,f:'#C0DD97',s:'#3B6D11',sh:[{o:[[280,140],[332,140],[332,115],[548,115],[548,140],[645,140],[645,160],[615,160],[615,190],[530,190],[530,160],[280,160]]}],
+ fence:[[[549,116],[549,139]],[[549,139],[644,139]]],
+ ic:[['g',300,151],['b',410,145]]},
+{n:'北端：中央通路（60）',z:0.5,f:'#97C459',s:'#27500A',sh:[{o:[[260,70],[645,70],[645,115],[260,115]]}],
+ ic:[['b',453,92],['b',487,92],['t',560,92,60]]},
+{n:'北端：北側（90）',z:0.7,f:'#EAF3DE',s:'#3B6D11',sh:[{o:[[262,30],[535,30],[535,70],[262,70]]}],
+ ic:[['w',282,42],['t',308,56,90],['b',418,50]]},
+{n:'右のコンベアー',z:1.2,f:'#FAC775',s:'#854F0B',sh:[
+ {o:[[739.6,28.6],[779.9,28.6],[779.9,43],[787.5,43],[787.5,76.5],[779.9,76.5],[779.9,155],[789.8,155],[789.8,181.6],[779.9,181.6],[779.9,350.8],[789.7,350.8],[789.7,375.2],[779.9,375.2],[779.9,444.6],[789.7,444.6],[789.7,467],[779.9,467],[779.9,636.2],[739.6,636.2],[739.6,467],[728.6,467],[728.6,444.6],[739.6,444.6],[739.6,375.2],[728.6,375.2],[728.6,350.8],[739.6,350.8],[739.6,234.5],[722.5,234.5],[722.5,208],[739.6,208]]},
+ {o:[[787.5,43],[844,43],[844,104],[794,104],[794,112],[780,112],[780,76.5],[787.5,76.5]]},
+ {o:[[780,528],[816,528],[816,553],[780,553]]}],
+ fence:[[[794,104],[822,104]],[[836,104],[844,104]]],door:[[[822,104],[836,104]]],
+ ic:[['s',787,104],['f',807,88],['f',807,99],['b',755,188],['t',755,395,30],['b',755,477],['b',770,567]]},
+{n:'上階：北側',z:2.2,f:'#F5C4B3',s:'#993C1D',sh:[{o:[[42,145],[68,145],[68,262],[195,262],[195,255],[270,255],[270,335],[195,335],[195,300],[125,300],[125,350],[100,355],[42,355]],h:[[[62,285],[100,285],[100,325],[62,325]]]},{o:[[100,143],[160,143],[160,167],[100,167]]},{o:[[62,372],[100,372],[100,410],[62,410]]},{o:[[120,380],[180,380],[180,396],[120,396]]}],
+ fence:[[[195,284],[195,300]]],door:[[[195,262],[195,284]]],
+ ic:[['b',225,268],['t',230,293,60],['w',256,293],['y',202,318],['y',216,318],['g',238,318],['g',260,318],['b',112,338],['t',81,391,30]]},
+{n:'上階：南西の部屋（S2）',z:2.1,f:'#EEEDFE',s:'#534AB7',sh:[{o:[[30,685],[150,685],[150,745],[215,745],[215,775],[30,775]]}],
+ fence:[[[30,706],[36,706]],[[61,706],[126,706]],[[126,706],[126,740]],[[126,764],[126,775]]],door:[[[36,706],[61,706]],[[126,740],[126,764]]],
+ ic:[['s',62,720],['g',86,720],['f',110,720],['e',122,740],['t',45,758,60],['S',85,752,'S2']]},
+{n:'上階：南側',z:2.4,f:'#CECBF6',s:'#534AB7',sh:[{o:[[42,475],[135,475],[140,500],[270,500],[290,520],[290,775],[265,775],[265,550],[110,550],[110,500],[72,500],[72,640],[42,640]]}],
+ ic:[['t',277,533,30]]},
+{n:'メイン：台',z:0.55,f:'#5DCAA5',s:'#085041',sh:[{o:[[470,510],[505,510],[505,545],[470,545]]}],
+ ic:[['t',487,527,60]]},
+{n:'メイン：下のコンベアー',z:0.1,f:'#E1F5EE',s:'#0F6E56',sh:[{o:[[400,690],[670,690],[670,750],[400,750]]}],
+ fence:[[[415,712],[660,712]]],
+ ic:[['b',548,730],['t',650,730,60]]},
+{n:'北端：高台',z:1.0,f:'#639922',s:'#173404',sh:[{o:[[372,64],[400,64],[400,120],[372,120]]}],
+ ic:[]},
+{n:'北端：S1の台',z:0.9,f:'#D7EBC0',s:'#3B6D11',sh:[{o:[[280,115],[332,115],[332,140],[280,140]]}],
+ ic:[['S',306,127,'S1']]},
+{n:'北端：東の台',z:0.9,f:'#D7EBC0',s:'#173404',sh:[{o:[[548,115],[600,115],[600,140],[548,140]]}],
+ ic:[]},
+{n:'メイン：中央通路（南側）',z:0.15,f:'#D2F0E5',s:'#0F6E56',sh:[{o:[[440,566],[510,566],[510,690],[440,690]]}],
+ ic:[['g',490,594],['g',490,620]]}
+];
+const GM=[0,2,3,3,3,4,5,6,6,2,2,3,3,3,2];const grp=(l,x,y)=>l===0?(y<520?0:1):GM[l];
+const ORDER=L.map((_,i)=>i).sort((a,b)=>L[a].z-L[b].z);
+const K=[
+ [13,[600,128],[640,128],5,[829,145],[829,106],[0.9,1.05,1.2]],
+ [1,[530,221],[546,221],5,[723,221],[739,221],[0.3,0.75,1.2]],
+ [0,[600,612],[600,558],5,[806,595],[806,556],[0,0.6,1.2]]];
+const RAW=[
+['l',57,160,6,435,135,2],['l',600,175,2,785,170,5],['l',150,388,6,575,388,0],['l',60,602,8,470,602,14],['l',270,660,8,632,660,0],
+['d',160,155,6,785,166,5],['d',765,363,5,515,368,0],['d',765,456,5,515,458,0],['d',784,360,5,590,360,0],['d',784,456,5,590,470,0],['d',95,475,8,505,487,1],
+['s',466,365,1,490,365,0],['s',466,460,1,490,460,0],
+['s',478,664,0,478,664,14,1,[512,664,478,664]],['s',449,612,14,449,566,1,0,[449,612,449,569]],
+['l',478,292,1,85,275,6],
+['l',386,56,4,386,72,11],['d',386,118,11,386,134,2],['d',398,92,11,422,92,3],
+['s',370,128,2,328,128,12],['s',57,690,7,57,642,8],['s',213,760,7,268,760,8],
+['j',290,104,3,290,124,12],['j',575,104,3,575,124,13],['j',513,126,2,513,104,3],['j',513,62,4,513,80,3],
+['j',55,155,6,112,155,6],['j',85,345,6,82,380,6],['j',772,60,5,800,60,5],['j',772,540,5,800,540,5],['j',460,672,14,460,705,10],
+['j',487,515,9,487,495,1],['j',487,540,9,487,560,1],['j',475,527,9,452,527,1],['j',500,527,9,520,527,1]];
+const OFF=[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+(function(){const pairs=[];
+ RAW.forEach(r=>{if(r[0]==='j')return;const[k,ax,ay,la,bx,by,lb,ww]=r;pairs.push([ax,ay,grp(la,ax,ay),bx,by,grp(lb,bx,by),ww||(k==='s'?0.5:1)])});
+ K.forEach(k=>pairs.push([k[2][0],k[2][1],grp(k[0],k[2][0],k[2][1]),k[4][0],k[4][1],grp(k[3],k[4][0],k[4][1]),4]));
+ for(let it=0;it<500;it++)for(let g=0;g<7;g++){if(g===2)continue;let sx=0,sy=0,sw=0;
+  pairs.forEach(([ax,ay,ga,bx,by,gb,w])=>{if(ga===gb)return;
+   if(ga===g){sx+=w*(OFF[gb][0]+bx-ax);sy+=w*(OFF[gb][1]+by-ay);sw+=w}
+   if(gb===g){sx+=w*(OFF[ga][0]+ax-bx);sy+=w*(OFF[ga][1]+ay-by);sw+=w}});
+  if(sw)OFF[g]=[sx/sw,sy/sw]}})();
+const C=[],J=[];
+RAW.forEach(c=>{
+ if(c[0]==='j'){J.push({a:[c[1],c[2],c[3]],b:[c[4],c[5],c[6]],top:L[c[3]].z>=L[c[6]].z?c[3]:c[6]});return}
+ const[k,ax,ay,la,bx,by,lb,,ex]=c,A={x:ax,y:ay,l:la},B={x:bx,y:by,l:lb};const hi=L[la].z>L[lb].z?A:B,lo=L[la].z>L[lb].z?B:A;
+ C.push(k==='d'?{k,V:hi,lo:lo.l,hi:hi.l,gl:lo.l,O:lo}:{k,V:lo,lo:lo.l,hi:hi.l,gl:hi.l,O:hi,ex})});
+const IC={b:['#D4537E','#fff','爆',1],g:['#97C459','#173404','手'],f:['#85B7EB','#042C53','閃'],y:['#F09595','#501313','焼'],w:['#B4B2A9','#2C2C2A','感'],t:['#EF9F27','#412402'],k:['#888780'],e:['#639922'],s:['#FAC775','#412402','C'],c:['#FFFFFF','#3B6D11','鶏']};
+const G=50,T=Math.sin(25*Math.PI/180),TK=5,MZ=2.4;
+let th=-10,AL=0.65,AL2=true,dragged=false,Z=1,PX=0,PY=0,DM='rot',lastW=1000;const SEL=new Set();
+const on=l=>SEL.size===0||SEL.has(l);
+const cop=(a,b)=>{const x=on(a),y=on(b);return x&&y?1:(x||y)?0.35:0};
+function mkb(par,label,col,fn){const b=document.createElement('button');b.innerHTML=(col?`<span class="sw" style="background:${col}"></span>`:'')+label;b.onclick=fn;par.appendChild(b);return b}
+const md=document.getElementById('md'),lv=document.getElementById('lv');
+const mb=[mkb(md,'上下接続（実際の配置）',0,()=>{AL2=true;PX=PY=0;draw()}),mkb(md,'マップ通り（展開図）',0,()=>{AL2=false;PX=PY=0;draw()})];
+window.tgl=l=>{if(dragged)return;SEL.has(l)?SEL.delete(l):SEL.add(l);PX=PY=0;draw()};
+const btns={'-1':mkb(lv,'全体',0,()=>{SEL.clear();PX=PY=0;draw()})};
+ORDER.slice().reverse().forEach(i=>{btns[i]=mkb(lv,L[i].n,L[i].f,()=>{SEL.has(i)?SEL.delete(i):SEL.add(i);PX=PY=0;draw()})});
+function W(x,y,g){const o=AL2?OFF[g]:[0,0];return[x+o[0],y+o[1]]}
+let CX=420,CY=400;
+function P(x,y,z){const a=th*Math.PI/180,c=Math.cos(a),s=Math.sin(a),dx=x-CX,dy=y-CY;return[c*dx-s*dy,(s*dx+c*dy)*T-z*G]}
+function Q(x,y,l,g){const w=W(x,y,g===undefined?grp(l,x,y):g);return P(w[0],w[1],L[l].z)}
+function poly(pts,l,off,g){return 'M'+pts.map(p=>{const q=Q(p[0],p[1],l,g);return q[0].toFixed(1)+' '+(q[1]+off).toFixed(1)}).join('L')+'Z'}
+const pathW=pts=>'M'+pts.map(p=>{const q=P(p[0],p[1],p[2]);return q[0].toFixed(1)+' '+q[1].toFixed(1)}).join('L')+'Z';
+function rings(l,g){const R=[];L[l].sh.forEach(s=>{if(grp(l,s.o[0][0],s.o[0][1])!==g)return;[s.o,...(s.h||[])].forEach(r=>R.push(r.map(p=>W(p[0],p[1],g))))});return R}
+function inside(R,p){let c=false;R.forEach(r=>{for(let i=0,j=r.length-1;i<r.length;j=i++){const a=r[i],b=r[j];if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])c=!c}});return c}
+function nearEdge(R,p){let best=null;R.forEach(r=>{for(let i=0;i<r.length;i++){const a=r[i],b=r[(i+1)%r.length],ex=b[0]-a[0],ey=b[1]-a[1],l2=ex*ex+ey*ey;if(!l2)continue;
+ let t=((p[0]-a[0])*ex+(p[1]-a[1])*ey)/l2;t=Math.max(0,Math.min(1,t));const q=[a[0]+t*ex,a[1]+t*ey],d=Math.hypot(p[0]-q[0],p[1]-q[1]);
+ if(!best||d<best.d){const ln=Math.sqrt(l2);best={d,q,e:[ex/ln,ey/ln]}}}});
+ let n=[-best.e[1],best.e[0]];if(!inside(R,[best.q[0]+n[0]*3,best.q[1]+n[1]*3]))n=[-n[0],-n[1]];best.n=n;return best}
+function rayHit(R,o,n){let m=Infinity;R.forEach(r=>{for(let i=0;i<r.length;i++){const a=r[i],b=r[(i+1)%r.length],sx=b[0]-a[0],sy=b[1]-a[1],den=n[0]*sy-n[1]*sx;if(Math.abs(den)<1e-9)continue;
+ const t=((a[0]-o[0])*sy-(a[1]-o[1])*sx)/den,u=((a[0]-o[0])*n[1]-(a[1]-o[1])*n[0])/den;if(t>1&&u>=0&&u<=1&&t<m)m=t}});return m}
+function geo(c){
+ if(c.k==='s'){
+  const go=grp(c.O.l,c.O.x,c.O.y),Ow=W(c.O.x,c.O.y,go);
+  if(c.ex){const g=grp(c.lo,c.ex[0],c.ex[1]),b=W(c.ex[0],c.ex[1],g),t=W(c.ex[2],c.ex[3],g),d=Math.hypot(t[0]-b[0],t[1]-b[1]);return{base:b,dir:[(t[0]-b[0])/d,(t[1]-b[1])/d],len:d,S:t,Ow}}
+  const R=rings(c.hi,go),ne=nearEdge(R,Ow);
+  const E=ne.q,len=Math.max(45,(L[c.hi].z-L[c.lo].z)*G*1.3),base=[E[0]-ne.n[0]*len,E[1]-ne.n[1]*len];
+  return{base,dir:ne.n,len,S:E,Ow}}
+ const gv=grp(c.V.l,c.V.x,c.V.y),Vw=W(c.V.x,c.V.y,gv),Ow=W(c.O.x,c.O.y,grp(c.O.l,c.O.x,c.O.y)),R=rings(c.V.l,gv),ne=nearEdge(R,Vw),wd=rayHit(R,ne.q,ne.n);
+ const pos=wd<110?[ne.q[0]+ne.n[0]*wd/2,ne.q[1]+ne.n[1]*wd/2]:Vw;return{pos,Ow}}
+function flight(a,b,z0,z1,hw){
+ hw=hw||9;const dx=b[0]-a[0],dy=b[1]-a[1],len=Math.hypot(dx,dy);if(len<1)return '';const dir=[dx/len,dy/len],pp=[-dir[1]*hw,dir[0]*hw],n=Math.max(3,Math.round((z1-z0)*G/6));
+ const pt=i=>[a[0]+dir[0]*len*i/n,a[1]+dir[1]*len*i/n],ht=i=>z0+(z1-z0)*(i+1)/n;
+ const side=sg=>{const ox=pp[0]*sg,oy=pp[1]*sg,r=[];const p0=pt(0);r.push([p0[0]+ox,p0[1]+oy,z0]);
+  for(let i=0;i<n;i++){const p=pt(i),q=pt(i+1);r.push([p[0]+ox,p[1]+oy,ht(i)],[q[0]+ox,q[1]+oy,ht(i)])}
+  const pn=pt(n);r.push([pn[0]+ox,pn[1]+oy,z0]);return r};
+ const mid=pt(n/2),ys=sg=>P(mid[0]+pp[0]*sg,mid[1]+pp[1]*sg,(z0+z1)/2)[1],near=ys(1)>ys(-1)?1:-1;
+ let s=`<path d="${pathW(side(-near))}" fill="#888780" stroke="#5F5E5A" stroke-width="0.8"/>`;
+ for(let i=0;i<n;i++){const p=pt(i),q=pt(i+1),h0=i?ht(i-1):z0,h1=ht(i);
+  s+=`<path d="${pathW([[p[0]-pp[0],p[1]-pp[1],h0],[p[0]+pp[0],p[1]+pp[1],h0],[p[0]+pp[0],p[1]+pp[1],h1],[p[0]-pp[0],p[1]-pp[1],h1]])}" fill="#B4B2A9" stroke="#5F5E5A" stroke-width="0.6"/>`;
+  s+=`<path d="${pathW([[p[0]-pp[0],p[1]-pp[1],h1],[p[0]+pp[0],p[1]+pp[1],h1],[q[0]+pp[0],q[1]+pp[1],h1],[q[0]-pp[0],q[1]-pp[1],h1]])}" fill="#D3D1C7" stroke="#5F5E5A" stroke-width="0.6"/>`}
+ s+=`<path d="${pathW(side(near))}" fill="#888780" fill-opacity="0.55" stroke="#5F5E5A" stroke-width="0.8"/>`;
+ return s}
+function landing(m,z){const h=9;const pts=[[m[0]-h,m[1]-h,z],[m[0]+h,m[1]-h,z],[m[0]+h,m[1]+h,z],[m[0]-h,m[1]+h,z]];
+ const sd=pathW([[m[0]-h,m[1]+h,z],[m[0]+h,m[1]+h,z],[m[0]+h,m[1]+h,z-0.12],[m[0]-h,m[1]+h,z-0.12]]);
+ return `<path d="${sd}" fill="#888780"/><path d="${pathW(pts)}" fill="#D3D1C7" stroke="#5F5E5A" stroke-width="0.8"/>`}
+function kStairs(k){
+ const[lo,b0,m1,hi,m2,t,z]=k,g1=grp(lo,b0[0],b0[1]),g2=grp(hi,t[0],t[1]);
+ const B=W(b0[0],b0[1],g1),M1=W(m1[0],m1[1],g1),M2=W(m2[0],m2[1],g2),Tt=W(t[0],t[1],g2);
+ const op=cop(lo,hi);if(!op)return '';let s='';
+ if(AL2){const M=[(M1[0]+M2[0])/2,(M1[1]+M2[1])/2];
+  const u1=[M[0]-B[0],M[1]-B[1]],u2=[Tt[0]-M[0],Tt[1]-M[1]],l1=Math.hypot(...u1)||1,l2=Math.hypot(...u2)||1,dot=(u1[0]*u2[0]+u1[1]*u2[1])/l1/l2;
+  if(dot>0.9){s=flight(B,Tt,z[0],z[2])}
+  else{const e1=[M[0]-u1[0]/l1*9,M[1]-u1[1]/l1*9],e2=[M[0]+u2[0]/l2*9,M[1]+u2[1]/l2*9];
+   s=flight(B,e1,z[0],z[1])+landing(M,z[1])+flight(e2,Tt,z[1],z[2])}}
+ else{s=flight(B,M1,z[0],z[1])+flight(M2,Tt,z[1],z[2])+`<line x1="${P(M1[0],M1[1],z[1])[0]}" y1="${P(M1[0],M1[1],z[1])[1]}" x2="${P(M2[0],M2[1],z[1])[0]}" y2="${P(M2[0],M2[1],z[1])[1]}" stroke="#5F5E5A" stroke-width="1.5" stroke-dasharray="2 3"/>`}
+ return `<g opacity="${op}">${s}</g>`}
+function vert(c){
+ const op=cop(c.lo,c.hi);if(!op)return '';
+ let s='';let z0=L[c.lo].z,z1=L[c.hi].z;
+ if(c.k==='s'){if(c.ex&&c.ex.length>4){z0=c.ex[4];z1=c.ex[5]}const g=geo(c);s=flight(g.base,[g.base[0]+g.dir[0]*g.len,g.base[1]+g.dir[1]*g.len],z0,z1)}
+ else if(c.k==='l'){const g=geo(c),b=P(g.pos[0],g.pos[1],z0),t=P(g.pos[0],g.pos[1],z1),x=b[0];
+  s+=`<g stroke="#D4537E" stroke-width="2.4" stroke-linecap="round"><line x1="${x-6}" y1="${b[1]}" x2="${x-6}" y2="${t[1]-8}"/><line x1="${x+6}" y1="${b[1]}" x2="${x+6}" y2="${t[1]-8}"/>`;for(let y=b[1]-5;y>t[1]-6;y-=7)s+=`<line x1="${x-6}" y1="${y}" x2="${x+6}" y2="${y}"/>`;s+='</g>'}
+ else{const gv=grp(c.V.l,c.V.x,c.V.y),b=Q(c.V.x,c.V.y,c.lo,gv),t=Q(c.V.x,c.V.y,c.hi,gv),x=b[0];
+  s+=`<line x1="${x}" y1="${t[1]+6}" x2="${x}" y2="${b[1]-9}" stroke="#D85A30" stroke-width="2.4" stroke-dasharray="4 3"/><path d="M${x-6} ${b[1]-10}L${x} ${b[1]}L${x+6} ${b[1]-10}Z" fill="#D85A30"/>`}
+ return `<g opacity="${op}">${s}</g>`}
+function dline(a,b,col){return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${col}" stroke-width="1.5" stroke-dasharray="2 3"/><circle cx="${b[0]}" cy="${b[1]}" r="3.5" fill="${col}"/>`}
+function guide(c){
+ const op=cop(c.lo,c.hi);if(!op)return '';
+ const col=c.k==='l'?'#D4537E':c.k==='d'?'#D85A30':'#5F5E5A',go=grp(c.O.l,c.O.x,c.O.y),o=Q(c.O.x,c.O.y,c.gl,go);let s='';
+ if(c.k==='s'){if(c.ex&&c.ex.length>4)return '';const g=geo(c),gv=grp(c.V.l,c.V.x,c.V.y);
+  if(Math.hypot(g.S[0]-g.Ow[0],g.S[1]-g.Ow[1])>6)s+=dline(P(g.S[0],g.S[1],L[c.hi].z),o,col);
+  if(!c.ex){const Vw=W(c.V.x,c.V.y,gv);if(Math.hypot(g.base[0]-Vw[0],g.base[1]-Vw[1])>6)s+=dline(P(g.base[0],g.base[1],L[c.lo].z),P(Vw[0],Vw[1],L[c.lo].z),col)}}
+ else if(c.k==='l'){const g=geo(c);s+=dline(P(g.pos[0],g.pos[1],L[c.hi].z),o,col)}
+ else{const gv=grp(c.V.l,c.V.x,c.V.y);s+=dline(Q(c.V.x,c.V.y,c.gl,gv),o,col);const t=Q(c.V.x,c.V.y,c.hi,gv);s+=`<circle cx="${t[0]}" cy="${t[1]}" r="5.5" fill="none" stroke="#D85A30" stroke-width="2.2"/>`}
+ return `<g opacity="${op}">${s}</g>`}
+function jump(j){
+ const op=cop(j.a[2],j.b[2]);if(!op)return '';
+ const a=Q(j.a[0],j.a[1],j.a[2]),b=Q(j.b[0],j.b[1],j.b[2]),d=Math.hypot(b[0]-a[0],b[1]-a[1]),cx=(a[0]+b[0])/2,cy=Math.min(a[1],b[1])-10-d*0.35;
+ const head=(p,q)=>{const dx=p[0]-q[0],dy=p[1]-q[1],l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l,px=-uy,py=ux;return `<path d="M${p[0]} ${p[1]}L${p[0]-ux*7+px*4} ${p[1]-uy*7+py*4}L${p[0]-ux*7-px*4} ${p[1]-uy*7-py*4}Z" fill="#1D9E75"/>`};
+ return `<g opacity="${op}"><path d="M${a[0]} ${a[1]}Q${cx} ${cy} ${b[0]} ${b[1]}" fill="none" stroke="#1D9E75" stroke-width="2.2" stroke-dasharray="4 2"/>${head(a,[cx,cy])}${head(b,[cx,cy])}</g>`}
+function fence(l){let s='';(L[l].fence||[]).forEach(f=>{const a=Q(f[0][0],f[0][1],l),b=Q(f[1][0],f[1][1],l);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#444441" stroke-width="2"/>`;
+ const n=Math.max(1,Math.round(Math.hypot(f[1][0]-f[0][0],f[1][1]-f[0][1])/20));for(let i=0;i<=n;i++){const x=a[0]+(b[0]-a[0])*i/n,y=a[1]+(b[1]-a[1])*i/n;s+=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-7}" stroke="#444441" stroke-width="1.6"/>`}
+ s+=`<line x1="${a[0]}" y1="${a[1]-7}" x2="${b[0]}" y2="${b[1]-7}" stroke="#444441" stroke-width="1.6"/>`});
+ (L[l].door||[]).forEach(f=>{const a=Q(f[0][0],f[0][1],l),b=Q(f[1][0],f[1][1],l);s+=`<path d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}L${b[0]} ${b[1]-8}L${a[0]} ${a[1]-8}Z" fill="#5DCAA5" stroke="#0F6E56" stroke-width="1.2"/>`});return s}
+function frame(){
+ const pts=[],zs=[];L.forEach((lev,l)=>{if(!on(l))return;zs.push(lev.z);lev.sh.forEach(s=>{const g=grp(l,s.o[0][0],s.o[0][1]);s.o.forEach(p=>pts.push(W(p[0],p[1],g)))})});
+ const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);CX=(Math.min(...xs)+Math.max(...xs))/2;CY=(Math.min(...ys)+Math.max(...ys))/2;
+ const R=Math.max(40,...pts.map(p=>Math.hypot(p[0]-CX,p[1]-CY)));
+ const zl=SEL.size?Math.min(...zs):0,zh=SEL.size?Math.max(...zs):MZ,pd=30,ex=SEL.size?G*0.6:0;
+ return[-R-pd,-R*T-zh*G-pd-ex,2*R+2*pd,2*R*T+(zh-zl)*G+2*pd+TK+2*ex]}
+function draw(){
+ Object.keys(btns).forEach(k=>btns[k].classList.toggle('on',+k===-1?SEL.size===0:SEL.has(+k)));mb[0].classList.toggle('on',AL2);mb[1].classList.toggle('on',!AL2);
+ document.getElementById('hint').textContent=SEL.size?`${SEL.size}エリアを表示中（もう一度タップで解除）`:'エリアをタップすると、選んだものだけを表示します（複数選択できます）';
+ const vb=frame();lastW=vb[2];let o='';
+ ORDER.forEach(l=>{const lev=L[l];
+  if(on(l)){
+  let d0='',d1='';lev.sh.forEach(s=>{const g=grp(l,s.o[0][0],s.o[0][1]);[s.o,...(s.h||[])].forEach(r=>{d0+=poly(r,l,TK,g);d1+=poly(r,l,0,g)})});
+  o+=`<g style="cursor:pointer" onclick="tgl(${l})"><path d="${d0}" fill="${lev.s}" fill-opacity="${AL}" fill-rule="evenodd"/><path d="${d1}" fill="${lev.f}" fill-opacity="${AL}" stroke="${lev.s}" stroke-width="1.5" fill-rule="evenodd"/>${fence(l)}`;
+  lev.ic.forEach(ic=>{const[t,x,y,v]=ic,q=Q(x,y,l),m=IC[t];
+   if(t==='S')o+=`<text x="${q[0]}" y="${q[1]}" font-size="16" font-weight="500" fill="#E24B4A" text-anchor="middle" dominant-baseline="central">${v}</text>`;
+   else{o+=m[3]?`<rect x="${q[0]-10}" y="${q[1]-10}" width="20" height="20" rx="2" fill="${m[0]}"/>`:`<circle cx="${q[0]}" cy="${q[1]}" r="10.5" fill="${m[0]}" stroke="${t==='s'?'#854F0B':t==='c'?'#3B6D11':'#fff'}" stroke-width="1"/>`;
+    const tx=t==='t'?v:m[2];if(tx)o+=`<text x="${q[0]}" y="${q[1]}" font-size="${t==='t'?11:13}" font-weight="500" fill="${m[1]}" text-anchor="middle" dominant-baseline="central">${tx}</text>`}});
+  o+='</g>';}
+  C.filter(c=>c.k!=='s'&&c.lo===l).forEach(c=>o+=vert(c));
+  C.filter(c=>c.k==='s'&&c.hi===l).forEach(c=>o+=vert(c));
+  K.filter(k=>k[3]===l).forEach(k=>o+=kStairs(k));
+  C.filter(c=>c.gl===l).forEach(c=>o+=guide(c));
+  J.filter(j=>j.top===l).forEach(j=>o+=jump(j));
+ });
+ PX=Math.max(-vb[2]/2,Math.min(vb[2]/2,PX));PY=Math.max(-vb[3]/2,Math.min(vb[3]/2,PY));
+ const w=vb[2]/Z,h=vb[3]/Z,cx=vb[0]+vb[2]/2+PX,cy=vb[1]+vb[3]/2+PY;
+ document.getElementById('zv').textContent=Math.round(Z*100)+'%';
+ document.getElementById('wrap').innerHTML=`<svg width="100%" viewBox="${cx-w/2} ${cy-h/2} ${w} ${h}" role="img" font-family="Noto Sans JP, sans-serif"><title>ミサイル施設の立体マップ</title><desc>3フロアの階層を重ね、ハシゴ・階段・飛び降り・段差とアイテム位置を示した図</desc>${o}</svg>`;
+}
+const rot=document.getElementById('rot'),rotv=document.getElementById('rotv');
+function setRot(v){v=((v+180)%360+360)%360-180;th=Math.round(v);rot.value=th;rotv.textContent=th+'°';draw()}
+rot.oninput=e=>setRot(+e.target.value);
+document.getElementById('alp').oninput=e=>{AL=e.target.value/100;draw()};
+const setZ=z=>{Z=Math.max(1,Math.min(6,z));if(Z===1){PX=PY=0}draw()};
+document.getElementById('zi').onclick=()=>setZ(Z*1.4);
+document.getElementById('zo').onclick=()=>setZ(Z/1.4);
+document.getElementById('zr').onclick=()=>{PX=PY=0;setZ(1)};
+const wrap=document.getElementById('wrap'),dmb=document.getElementById('dm');
+dmb.onclick=()=>{DM=DM==='rot'?'move':'rot';dmb.textContent=DM==='rot'?'ドラッグ：回転':'ドラッグ：移動';dmb.classList.toggle('on',DM==='move');wrap.style.touchAction=DM==='move'?'none':'pan-y'};
+const pts=new Map();let st=null;
+const snap=()=>{const a=[...pts.values()];st={th,PX,PY,Z,a:a.map(p=>({...p})),d:a.length>1?Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y):0}};
+wrap.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});dragged=false;snap()});
+wrap.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId)||!st)return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});const a=[...pts.values()];
+ if(a.length>1){const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(st.d>0){dragged=true;Z=Math.max(1,Math.min(6,st.Z*d/st.d));draw()}return}
+ const dx=a[0].x-st.a[0].x,dy=a[0].y-st.a[0].y;if(Math.hypot(dx,dy)>4)dragged=true;if(!dragged)return;
+ if(DM==='rot')setRot(st.th+dx*0.8);else{const k=(lastW/Z)/wrap.clientWidth;PX=st.PX-dx*k;PY=st.PY-dy*k;draw()}});
+const end=e=>{pts.delete(e.pointerId);if(pts.size)snap();else{st=null;setTimeout(()=>dragged=false,50)}};
+['pointerup','pointercancel','pointerleave'].forEach(t=>wrap.addEventListener(t,end));
+wrap.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();setZ(Z*(e.deltaY<0?1.1:1/1.1))},{passive:false});
+draw();
+</script>
+</body>
+</html>
